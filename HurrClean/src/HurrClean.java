@@ -15,6 +15,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,12 +41,24 @@ public class HurrClean
 			for ( int i=0; i<storms.size(); i++ ) {
 				StormData storm = storms.get(i);
 				System.out.println("name: " + storm.getName() + "  numTracks: " + storm.NumTracks());
+				
+				int k = 0;
 				for ( int j=0; j<storm.entries.length; j++ ) {
-					String[] entry = storm.Entries()[i];
+					String[] entry = storm.Entries()[j];
 					System.out.println(j + " date: " + entry[0] + entry[1] + entry[2]);
 					
+					if (Arrays.asList(entry).contains("-999.000000")) {
+						
+						k++;
+	                }
 				}
 				
+                double pc = ((double)k/storm.entries.length * 100);
+                if (pc < 50)
+                    System.out.printf( "id: %s name: %s, %.2f %% missing\n",storm.atcID, storm.name, pc);
+                else
+                    System.out.println( "------- BAD ------ " +  storm.entries[i][0] + " " + storm.atcID + " " + storm.name + " " + pc + "% missing");
+
 			}
 			 
 		}
