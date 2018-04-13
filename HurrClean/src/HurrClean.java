@@ -34,8 +34,19 @@ public class HurrClean
 			// create ObjectMapper instance
 			ObjectMapper objectMapper = new ObjectMapper();
 		     
-		    List<StormData> myObjects = objectMapper.readValue(jsonData , new TypeReference<List<StormData>>(){});
-			System.out.println(myObjects);
+		    List<StormData> storms = objectMapper.readValue(jsonData , new TypeReference<List<StormData>>(){});
+			System.out.println("Length: " + storms.size());
+			
+			for ( int i=0; i<storms.size(); i++ ) {
+				StormData storm = storms.get(i);
+				System.out.println("name: " + storm.getName() + "  numTracks: " + storm.NumTracks());
+				for ( int j=0; j<storm.entries.length; j++ ) {
+					String[] entry = storm.Entries()[i];
+					System.out.println(j + " date: " + entry[0] + entry[1] + entry[2]);
+					
+				}
+				
+			}
 			 
 		}
 		catch (IOException ioE) {
@@ -47,7 +58,7 @@ public class HurrClean
 	
 	public static void main(String[] args) {
 		
-		String hurrFile = "/Users/rkwright/dev/Sandbox_Util/workspace/HurrClean/hurrdat-short.json";
+		String hurrFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-miss.json";
 		hurrClean( hurrFile );
 	}
 
