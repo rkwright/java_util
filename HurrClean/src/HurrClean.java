@@ -86,8 +86,8 @@ public class HurrClean
 	
 	public static void main(String[] args) {
 		
-		String 	hurrFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-clean.json";
-		String	cleanFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-clean2.json";
+		String 	hurrFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-miss.json";
+		String	cleanFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-clean.json";
 		hurrClean( hurrFile, cleanFile );
 	}
 
