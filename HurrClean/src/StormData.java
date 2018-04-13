@@ -48,8 +48,8 @@ public class StormData {
 		this.entries = entries;
 	}
 
-	String		atcID;
-	String 		name;
-	String		numTracks;
-	String[][] 	entries;
+	public String		atcID;
+	public String 		name;
+	public String		numTracks;
+	public String[][] 	entries;
 }

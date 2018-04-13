@@ -12,7 +12,9 @@
  *
  */
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -25,10 +27,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HurrClean
 {
 
-	public static boolean hurrClean ( String fileName ) {
+	public static boolean hurrClean ( String fileName, String fileOut ) {
 
 		try	{
 			
+			String	jsonOut = "[\n";
 			// read json file data to String
 			byte[] jsonData = Files.readAllBytes(Paths.get(fileName));
 
@@ -59,7 +62,19 @@ public class HurrClean
                 else
                     System.out.println( "------- BAD ------ " +  storm.entries[i][0] + " " + storm.atcID + " " + storm.name + " " + pc + "% missing");
 
+                //objectMapper.writeValue(System.out, storm);
+                String output = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(storm);;
+                System.out.printf("\n\noutput: %s", output);
+                
+                if (i > 0) {
+                	jsonOut += ",\n";
+                }
+                jsonOut += output;
 			}
+			
+			jsonOut += "\n]\n";
+			PrintStream outStream = new PrintStream(new FileOutputStream( fileOut ));
+			outStream.print(jsonOut);
 			 
 		}
 		catch (IOException ioE) {
@@ -71,8 +86,9 @@ public class HurrClean
 	
 	public static void main(String[] args) {
 		
-		String hurrFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-miss.json";
-		hurrClean( hurrFile );
+		String 	hurrFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-clean.json";
+		String	cleanFile = "/Users/rkwright/dev/Sandbox_Java/HurrClean/hurrdata-clean2.json";
+		hurrClean( hurrFile, cleanFile );
 	}
 
 }
